@@ -21,7 +21,7 @@
     "@typescript-eslint/no-floating-promises": "error",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "error",
-    "max-params": ["error", 3],
+    "max-params": ["error", 4],
     "require-await": "error",
     "prettier/prettier": [
       "error",
