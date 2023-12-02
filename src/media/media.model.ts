@@ -1,4 +1,5 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, NonAttribute } from 'sequelize'
+import { Album } from '~/album/album.model'
 import sequelize from '~/config/db'
 import { User } from '~/model'
 
@@ -10,11 +11,9 @@ export class Media extends Model<InferAttributes<Media, { omit: 'author' | 'albu
   declare src: string
   declare authorId: string
   declare isPremium: boolean
-
   declare albumId: CreationOptional<string>
-
   declare author?: NonAttribute<User>
-  declare album?: NonAttribute<User>
+  declare album?: NonAttribute<Album>
 }
 
 Media.init(

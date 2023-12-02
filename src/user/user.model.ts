@@ -1,14 +1,14 @@
-import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, NonAttribute } from 'sequelize'
+import * as bcrypt from 'bcrypt'
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, NonAttribute } from 'sequelize'
 import sequelize from '~/config/db'
 import { ERole, Role } from '~/role/role.model'
-import * as bcrypt from 'bcrypt'
 
 export class User extends Model<InferAttributes<User, { omit: 'role' }>, InferCreationAttributes<User>> {
   declare id: CreationOptional<string>
-  declare firstName: string
-  declare lastName: string
+  declare firstName: CreationOptional<string>
+  declare lastName: CreationOptional<string>
   declare email: string
-  declare phone: string
+  declare phone: CreationOptional<string>
   declare password: string
   declare isPremium: boolean
   declare roleCode: ERole
@@ -35,21 +35,24 @@ User.init(
     },
     email: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      allowNull: false
     },
     phone: {
       type: DataTypes.STRING,
       unique: true
     },
     password: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     isPremium: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
     roleCode: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     }
   },
   {
