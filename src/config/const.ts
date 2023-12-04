@@ -10,5 +10,5 @@ export const DB = {
 
 export const JWT = {
   AUTH_SECRET_KEY_ACCESS_TOKEN: 'abc',
-  AUTH_SECRET_KEY_EXPIRES: '15m'
+  AUTH_SECRET_KEY_EXPIRES: '1500m'
 }

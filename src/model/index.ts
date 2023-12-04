@@ -8,14 +8,15 @@ import { PlayList } from '~/playlist/playlist.model'
 import { PlayListAndMusic } from '~/playlistAndMusics/playlistAndMusics.model'
 import { ERole, Role } from '~/role/role.model'
 import { User } from '~/user/user.model'
+import { dataSeeds } from '~/utils/data'
 
 // user and role
 User.belongsTo(Role, { foreignKey: 'roleCode', targetKey: 'code', as: 'role' })
 Role.hasMany(User, { foreignKey: 'roleCode' })
 
 // user and album
-Album.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id' })
-User.hasMany(Album, { foreignKey: 'authorId' })
+Album.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id', as: 'author' })
+User.hasMany(Album, { foreignKey: 'authorId', as: 'album' })
 
 // playlist  and user
 PlayList.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id' })
@@ -27,7 +28,7 @@ PlayListAndMusic.belongsTo(PlayList, { foreignKey: 'playListId' })
 
 // album and music
 Media.belongsTo(Album, { foreignKey: 'albumId', targetKey: 'id' })
-Album.hasMany(Media, { foreignKey: 'albumId' })
+Album.hasMany(Media, { foreignKey: 'albumId', as: 'medias' })
 
 // favorite and user
 Favorite.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' })
@@ -62,20 +63,7 @@ export const seedModel = async () => {
     Role.create({ code: ERole.USER })
   ])
 
-  await Promise.all([
-    User.create({
-      email: 'user@gmail.com',
-      password: 'user',
-      roleCode: ERole.USER,
-      isPremium: false
-    }),
-    User.create({
-      email: 'admin@gmail.com',
-      password: 'admin',
-      roleCode: ERole.ADMIN,
-      isPremium: true
-    })
-  ])
+  await Promise.all(dataSeeds.map((data) => User.create(data)))
 }
 
 // seedModel().catch(console.log)
