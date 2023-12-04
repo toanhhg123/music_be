@@ -13,11 +13,35 @@ class MediaService {
       }
     }
 
-    return Media.findAll({ where: filter, include: [{ model: Album }, { model: User, as: 'author' }] })
+    return Media.findAll({
+      where: filter,
+      include: [
+        { model: Album, as: 'album' },
+        { model: User, as: 'author' }
+      ]
+    })
+  }
+
+  getByAlbumId(albumId: string) {
+    return Media.findAll({
+      where: {
+        albumId
+      },
+      include: [
+        { model: Album, as: 'album' },
+        { model: User, as: 'author' }
+      ]
+    })
   }
 
   getById(id: string) {
-    return Media.findOne({ where: { id }, include: [{ model: Album }, { model: User, as: 'author' }] })
+    return Media.findOne({
+      where: { id },
+      include: [
+        { model: Album, as: 'album' },
+        { model: User, as: 'author' }
+      ]
+    })
   }
 
   create(media: Media) {

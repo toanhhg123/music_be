@@ -27,7 +27,7 @@ PlayListAndMusic.belongsTo(Media, { foreignKey: 'mediaId' })
 PlayListAndMusic.belongsTo(PlayList, { foreignKey: 'playListId' })
 
 // album and music
-Media.belongsTo(Album, { foreignKey: 'albumId', targetKey: 'id' })
+Media.belongsTo(Album, { foreignKey: 'albumId', targetKey: 'id', as: 'album' })
 Album.hasMany(Media, { foreignKey: 'albumId', as: 'medias' })
 
 // favorite and user

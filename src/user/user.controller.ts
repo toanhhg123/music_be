@@ -23,6 +23,16 @@ export const getAllUser = async (req: Request, res: Response) => {
   })
 }
 
+export const getSingers = async (req: Request, res: Response) => {
+  const data = await userService.getSingers()
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get users success',
+    element: data
+  })
+}
+
 export const createUser = async (req: Request<unknown, unknown, User>, res: Response) => {
   const data = await userService.create(req.body)
 

@@ -16,6 +16,16 @@ export const getAll = async (req: Request<unknown, unknown, User, PageQuery>, re
   })
 }
 
+export const getByAlbumId = async (req: Request<{ id: string }, unknown, User, PageQuery>, res: Response) => {
+  const data = await mediaService.getByAlbumId(req.params.id)
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get media success',
+    element: data
+  })
+}
+
 export const AddMusic = async (req: Request<unknown, unknown, Media, PageQuery>, res: Response) => {
   const data = await mediaService.create({
     ...req.body,

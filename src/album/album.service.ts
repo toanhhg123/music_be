@@ -2,6 +2,7 @@ import { HTTP403Error } from '~/http/error'
 import { Album } from './album.model'
 import { Media, User } from '~/model'
 import { ERole } from '~/role/role.model'
+import { Op } from 'sequelize'
 
 class AlbumService {
   async isAuthor(userId: string, albumId: string) {
@@ -10,7 +11,16 @@ class AlbumService {
   }
 
   getByUserId(userId: string) {
-    return Album.findAll({ where: { authorId: userId } })
+    return Album.findAll({
+      where: { authorId: userId },
+      include: [
+        {
+          model: User,
+          as: 'author'
+        },
+        { model: Media, as: 'medias' }
+      ]
+    })
   }
 
   getAlbumSinger() {
@@ -20,7 +30,7 @@ class AlbumService {
           model: User,
           as: 'author',
           where: {
-            roleCode: ERole.SINGER
+            [Op.or]: [{ roleCode: ERole.SINGER }, { roleCode: ERole.ADMIN }]
           }
         },
         { model: Media, as: 'medias' }

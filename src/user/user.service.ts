@@ -1,5 +1,6 @@
 import { HTTP409Error } from '~/http/error'
 import { User } from './user.model'
+import { ERole } from '~/role/role.model'
 
 class UserService {
   async create(user: User) {
@@ -15,6 +16,10 @@ class UserService {
 
   getAllUser() {
     return User.findAll({ limit: 15 })
+  }
+
+  getSingers() {
+    return User.findAll({ limit: 15, where: { roleCode: ERole.SINGER } })
   }
 
   updateUser(id: string, user: Partial<User>) {
