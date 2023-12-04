@@ -5,7 +5,7 @@ import { Media } from './media.model'
 
 class MediaService {
   getAll(query: PageQuery) {
-    const search = query.search
+    const search = query.search || ''
 
     const filter = {
       name: {
