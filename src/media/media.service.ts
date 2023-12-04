@@ -16,6 +16,10 @@ class MediaService {
     return Media.findAll({ where: filter, include: [{ model: Album }, { model: User, as: 'author' }] })
   }
 
+  getById(id: string) {
+    return Media.findOne({ where: { id }, include: [{ model: Album }, { model: User, as: 'author' }] })
+  }
+
   create(media: Media) {
     return Media.create(media)
   }

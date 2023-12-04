@@ -4,7 +4,8 @@ import { DB } from './const'
 const sequelize = new Sequelize(DB.DB_NAME, DB.USER, DB.PASS, {
   host: DB.HOST,
   dialect: 'mysql',
-  port: DB.PORT
+  port: DB.PORT,
+  logging: false
 })
 
 export const connect = async () => {
