@@ -1,13 +1,10 @@
-import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, NonAttribute } from 'sequelize'
+import { DataTypes, NonAttribute } from 'sequelize'
+import { BaseModel } from '~/base/base.model'
 import sequelize from '~/config/db'
 import { Media } from '~/media/media.model'
 import { User } from '~/model'
 
-export class Favorite extends Model<
-  InferAttributes<Favorite, { omit: 'media' | 'user' }>,
-  InferCreationAttributes<Favorite>
-> {
-  declare id: CreationOptional<string>
+export class Favorite extends BaseModel<Favorite, { omit: 'user' | 'media' }> {
   declare userId: string
   declare mediaId: string
 
