@@ -65,6 +65,7 @@ export const HandleNotFound = (_req: Request, _res: Response, next: NextFunction
 }
 
 export function handleError(error: unknown, _request: Request, response: Response, _next: NextFunction) {
+  console.log(error)
   const errorRes = handleErrorResponse(error)
   return response.status(errorRes.httpCode).json({
     ...errorRes,

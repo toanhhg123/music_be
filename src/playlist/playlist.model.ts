@@ -1,21 +1,34 @@
-import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, NonAttribute } from 'sequelize'
+import {
+  Association,
+  DataTypes,
+  HasManyCreateAssociationMixin,
+  HasManyGetAssociationsMixin,
+  HasManyRemoveAssociationsMixin,
+  NonAttribute
+} from 'sequelize'
+import { BaseModel } from '~/base/base.model'
 import sequelize from '~/config/db'
 import { Media } from '~/media/media.model'
-import { User } from '~/model'
+import { PlayListAndMusic, User } from '~/model'
 
-export class PlayList extends Model<
-  InferAttributes<PlayList, { omit: 'medias' | 'author' }>,
-  InferCreationAttributes<PlayList>
-> {
-  declare id: CreationOptional<string>
+class PlayList extends BaseModel<PlayList, { omit: 'author' | 'medias' | 'playlistAndMusics' }> {
   declare name: string
   declare authorId: string
 
   declare author?: NonAttribute<User>
   declare medias?: NonAttribute<Media[]>
+  declare playlistAndMusics?: NonAttribute<PlayListAndMusic[]>
+
+  declare getPlaylistAndMusics: HasManyGetAssociationsMixin<PlayListAndMusic> // Note the null assertions!
+  declare createPlaylistAndMusic: HasManyCreateAssociationMixin<PlayListAndMusic, 'playListId'> // Note the null assertions!
+  declare removePlaylistAndMusic: HasManyRemoveAssociationsMixin<PlayListAndMusic, string> // Note the null assertions!
+
+  declare static associations: {
+    playlistAndMusics: Association<PlayList, PlayListAndMusic>
+  }
 }
 
-PlayList.init(
+export const TPlayList = PlayList.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -33,3 +46,5 @@ PlayList.init(
   },
   { sequelize, modelName: 'Playlists', timestamps: true }
 )
+
+export default PlayList

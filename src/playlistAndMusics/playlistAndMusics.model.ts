@@ -1,7 +1,7 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, NonAttribute } from 'sequelize'
 import sequelize from '~/config/db'
 import { Media } from '~/media/media.model'
-import { PlayList } from '~/playlist/playlist.model'
+import { PlayList } from '~/model'
 
 export class PlayListAndMusic extends Model<
   InferAttributes<PlayListAndMusic, { omit: 'playlist' | 'media' }>,

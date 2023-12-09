@@ -4,7 +4,7 @@ import sequelize from '~/config/db'
 import { Favorite } from '~/favorite/favorite.model'
 import { History } from '~/history/history.model'
 import { Media } from '~/media/media.model'
-import { PlayList } from '~/playlist/playlist.model'
+import PlayList from '~/playlist/playlist.model'
 import { PlayListAndMusic } from '~/playlistAndMusics/playlistAndMusics.model'
 import { ERole, Role } from '~/role/role.model'
 import { User } from '~/user/user.model'
@@ -23,8 +23,9 @@ PlayList.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id' })
 User.hasMany(PlayList, { foreignKey: 'authorId' })
 
 //playlist and music
-PlayListAndMusic.belongsTo(Media, { foreignKey: 'mediaId' })
+PlayListAndMusic.belongsTo(Media, { foreignKey: 'mediaId', as: 'media' })
 PlayListAndMusic.belongsTo(PlayList, { foreignKey: 'playListId' })
+PlayList.hasMany(PlayListAndMusic, { foreignKey: 'playListId', as: 'playlistAndMusics' })
 
 // album and music
 Media.belongsTo(Album, { foreignKey: 'albumId', targetKey: 'id', as: 'album' })
@@ -68,4 +69,4 @@ export const seedModel = async () => {
 
 // seedModel().catch(console.log)
 
-export { Role, User, Album, Media }
+export { Role, User, Album, Media, PlayList, PlayListAndMusic, Comment, History }
