@@ -5,7 +5,7 @@ import mediaRouter from '~/media/media.route'
 import albumRouter from '~/album/album.route'
 import playlistRouter from '~/playlist'
 import favoriteRoute from '~/favorite/favorite.route'
-
+import uploadRouter from '~/upload/upload.route'
 const router = Router()
 
 router.use('/auth', authRouter)
@@ -14,5 +14,6 @@ router.use('/media', mediaRouter)
 router.use('/album', albumRouter)
 router.use('/playlist', playlistRouter)
 router.use('/favorite', favoriteRoute.router)
+router.use('/upload', uploadRouter)
 
 export default router
