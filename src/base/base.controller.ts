@@ -15,16 +15,6 @@ export class BaseController<S extends BaseService> {
 
   service: S
 
-  async getAll(_: Request, res: Response) {
-    const data = await this.service.findWithPagination({})
-
-    res.json({
-      status: StatusCodes.OK,
-      message: 'success',
-      element: data
-    })
-  }
-
   onSuccess(res: Response, data: any) {
     res.json({
       status: StatusCodes.OK,
@@ -33,33 +23,27 @@ export class BaseController<S extends BaseService> {
     })
   }
 
+  async getAll(_: Request, res: Response) {
+    const data = await this.service.findWithPagination({})
+
+    this.onSuccess(res, data)
+  }
+
   async create(req: Request, res: Response) {
     const data = await this.service.create(req.body)
 
-    res.json({
-      status: StatusCodes.OK,
-      message: 'success',
-      element: data
-    })
+    this.onSuccess(res, data)
   }
 
   async update(req: Request, res: Response) {
     const data = await this.service.update(req.params.id, req.body)
 
-    res.json({
-      status: StatusCodes.OK,
-      message: 'success',
-      element: data
-    })
+    this.onSuccess(res, data)
   }
 
   async remove(req: Request, res: Response) {
     const data = await this.service.delete(req.params.id)
 
-    res.json({
-      status: StatusCodes.OK,
-      message: 'success',
-      element: data
-    })
+    this.onSuccess(res, data)
   }
 }

@@ -12,7 +12,7 @@ export class User extends Model<InferAttributes<User, { omit: 'role' }>, InferCr
   declare password: string
   declare isPremium: boolean
   declare roleCode: ERole
-
+  declare avatar?: string
   declare role?: NonAttribute<Role>
 
   public static async validPassword(user: User, password: string): Promise<boolean> {
@@ -53,6 +53,11 @@ User.init(
     roleCode: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null
     }
   },
   {

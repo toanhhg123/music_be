@@ -22,7 +22,7 @@ export class BaseService<T extends BaseModel = any> {
       total: count,
       skip: offset,
       limit,
-      page: Math.ceil(offset / limit)
+      page: Math.ceil(offset / limit) || 1
     }
   }
 

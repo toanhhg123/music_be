@@ -6,9 +6,8 @@ import { History } from '~/history/history.model'
 import { Media } from '~/media/media.model'
 import PlayList from '~/playlist/playlist.model'
 import { PlayListAndMusic } from '~/playlistAndMusics/playlistAndMusics.model'
-import { ERole, Role } from '~/role/role.model'
+import { Role } from '~/role/role.model'
 import { User } from '~/user/user.model'
-import { dataSeeds } from '~/utils/data'
 
 // user and role
 User.belongsTo(Role, { foreignKey: 'roleCode', targetKey: 'code', as: 'role' })
@@ -36,7 +35,7 @@ Favorite.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' })
 User.hasMany(Favorite, { foreignKey: 'userId' })
 
 //favorite and media
-Favorite.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id' })
+Favorite.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id', as: 'media' })
 
 // History and user
 History.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' })
@@ -56,17 +55,17 @@ Comment.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id' })
 Media.hasMany(Comment, { foreignKey: 'mediaId' })
 
 export const seedModel = async () => {
-  await sequelize.sync({ force: true })
+  await sequelize.sync({})
 
-  await Promise.all([
-    Role.create({ code: ERole.ADMIN }),
-    Role.create({ code: ERole.SINGER }),
-    Role.create({ code: ERole.USER })
-  ])
+  // await Promise.all([
+  //   Role.create({ code: ERole.ADMIN }),
+  //   Role.create({ code: ERole.SINGER }),
+  //   Role.create({ code: ERole.USER })
+  // ])
 
-  await Promise.all(dataSeeds.map((data) => User.create(data)))
+  // await Promise.all(dataSeeds.map((data) => User.create(data)))
 }
 
-// seedModel().catch(console.log)
+seedModel().catch(console.log)
 
-export { Role, User, Album, Media, PlayList, PlayListAndMusic, Comment, History }
+export { Album, Comment, History, Media, PlayList, PlayListAndMusic, Role, User }
