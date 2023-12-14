@@ -45,7 +45,7 @@ User.hasMany(History, { foreignKey: 'userId' })
 Media.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id', as: 'author' })
 
 //History and media
-History.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id' })
+History.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id', as: 'media' })
 
 //comment and user
 Comment.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id' })
