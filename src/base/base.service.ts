@@ -14,8 +14,9 @@ export class BaseService<T extends BaseModel = any> {
   async findWithPagination(findOptions: FindOptions<T>) {
     const offset = Number(findOptions.offset) || 0
     const limit = Number(findOptions.limit) || 20
+    const order = findOptions.order || [['createdAt', 'DESC']]
 
-    const { rows, count } = await this.model.findAndCountAll({ ...findOptions, offset, limit })
+    const { rows, count } = await this.model.findAndCountAll({ ...findOptions, offset, limit, order })
 
     return {
       rows,

@@ -48,7 +48,7 @@ Media.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id', as: 'author' })
 History.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id', as: 'media' })
 
 //comment and user
-Comment.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id' })
+Comment.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id', as: 'author' })
 
 //comment and media
 Comment.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id' })
