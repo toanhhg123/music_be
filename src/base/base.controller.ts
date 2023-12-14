@@ -23,9 +23,8 @@ export class BaseController<S extends BaseService> {
     })
   }
 
-  async getAll(_: Request, res: Response) {
-    const data = await this.service.findWithPagination({})
-
+  async getAll(req: Request, res: Response) {
+    const data = await this.service.findWithPagination({ ...req.query })
     this.onSuccess(res, data)
   }
 
