@@ -11,7 +11,7 @@ router.get('/user/:id', expressAsyncHandler(getMusicByUserId))
 router.get('/album/:id', expressAsyncHandler(getByAlbumId))
 
 router.use(authorize())
-router.get('/my-music', expressAsyncHandler(getMyMusic))
+router.get('/my-music/me', expressAsyncHandler(getMyMusic))
 router.post('/', expressAsyncHandler(AddMusic))
 router.patch('/:id', expressAsyncHandler(updateMusic))
 

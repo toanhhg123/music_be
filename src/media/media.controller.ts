@@ -17,7 +17,7 @@ export const getAll = async (req: Request<unknown, unknown, User, PageQuery>, re
 }
 
 export const getMyMusic = async (req: Request<{ id: string }, unknown, Partial<Media>, PageQuery>, res: Response) => {
-  const data = await Media.findAll({ where: { authorId: req.user } })
+  const data = await Media.findAll({ where: { authorId: req.user.id } })
 
   res.json({
     status: StatusCodes.OK,
