@@ -16,6 +16,29 @@ export const getAll = async (req: Request<unknown, unknown, User, PageQuery>, re
   })
 }
 
+export const getMyMusic = async (req: Request<{ id: string }, unknown, Partial<Media>, PageQuery>, res: Response) => {
+  const data = await Media.findAll({ where: { authorId: req.user } })
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get media success',
+    element: data
+  })
+}
+
+export const getMusicByUserId = async (
+  req: Request<{ id: string }, unknown, Partial<Media>, PageQuery>,
+  res: Response
+) => {
+  const data = await Media.findAll({ where: { authorId: req.params.id } })
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get media success',
+    element: data
+  })
+}
+
 export const getByAlbumId = async (req: Request<{ id: string }, unknown, User, PageQuery>, res: Response) => {
   const data = await mediaService.getByAlbumId(req.params.id)
 
