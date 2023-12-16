@@ -1,6 +1,7 @@
+import * as bcrypt from 'bcrypt'
 import { HTTP409Error } from '~/http/error'
-import { User } from './user.model'
 import { ERole } from '~/role/role.model'
+import { User } from './user.model'
 
 class UserService {
   async create(user: User) {
@@ -28,6 +29,12 @@ class UserService {
 
   findById(id: string) {
     return User.findByPk(id)
+  }
+
+  updatePasswordById(id: string, password: string) {
+    const salt = bcrypt.genSaltSync()
+    const passwordH = bcrypt.hashSync(password, salt)
+    return User.update({ password: passwordH }, { where: { id } })
   }
 }
 

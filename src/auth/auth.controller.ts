@@ -34,3 +34,16 @@ export const login = async (req: Request<unknown, unknown, { email: string; pass
     }
   })
 }
+
+export const changePassword = async (
+  req: Request<unknown, unknown, { email: string; password: string }>,
+  res: Response
+) => {
+  const data = await userService.updatePasswordById(req.user.id, req.body.password)
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get users success',
+    element: data
+  })
+}

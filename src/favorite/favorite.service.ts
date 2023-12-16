@@ -1,6 +1,6 @@
 import { BaseService } from '~/base/base.service'
 import { Favorite } from './favorite.model'
-import { FindOptions, InferCreationAttributes, Optional } from 'sequelize'
+import { FindOptions, InferCreationAttributes, Op, Optional } from 'sequelize'
 import { Media } from '~/model'
 import { HTTP403Error } from '~/http/error'
 import sequelize from '~/config/db'
@@ -11,7 +11,12 @@ export class FavoriteService extends BaseService<Favorite> {
   }
 
   async validateAuthor(userId: string, favoriteId: string) {
-    const isExist = await this.model.findOne({ where: { userId, id: favoriteId } })
+    const isExist = await this.model.findOne({
+      where: {
+        userId,
+        [Op.or]: [{ id: favoriteId }, { mediaId: favoriteId }]
+      }
+    })
     if (!isExist) throw new HTTP403Error()
   }
 
