@@ -55,6 +55,7 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.6.5",
     "sequelize": "^6.35.1",
-    "streamifier": "^0.1.1"
+    "streamifier": "^0.1.1",
+    "stripe": "^14.9.0"
   }
 }

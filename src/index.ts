@@ -4,8 +4,14 @@ import { HandleNotFound, handleError } from './http/error'
 import cors from 'cors'
 import { connect } from './config/db'
 import router from '~/routes'
+import { webHookPayment } from './payment/payment.route'
+import path from 'path'
 
 const app = express()
+
+app.use(express.static(path.join(__dirname, 'public')))
+
+webHookPayment(app)
 
 app.use(express.json())
 app.use(

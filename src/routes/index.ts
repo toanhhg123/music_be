@@ -8,6 +8,7 @@ import mediaRouter from '~/media/media.route'
 import playlistRouter from '~/playlist'
 import uploadRouter from '~/upload/upload.route'
 import userRouter from '~/user/user.route'
+import paymentRoute from '~/payment/payment.route'
 
 const router = Router()
 
@@ -20,5 +21,6 @@ router.use('/favorite', favoriteRoute.router)
 router.use('/upload', uploadRouter)
 router.use('/history', historyRouter)
 router.use('/comment', commentRouter)
+router.use('/payment', paymentRoute)
 
 export default router
