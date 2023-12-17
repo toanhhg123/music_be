@@ -9,6 +9,7 @@ import playlistRouter from '~/playlist'
 import uploadRouter from '~/upload/upload.route'
 import userRouter from '~/user/user.route'
 import paymentRoute from '~/payment/payment.route'
+import reportRouter from '~/report/report.route'
 
 const router = Router()
 
@@ -22,5 +23,6 @@ router.use('/upload', uploadRouter)
 router.use('/history', historyRouter)
 router.use('/comment', commentRouter)
 router.use('/payment', paymentRoute)
+router.use('/report', reportRouter)
 
 export default router

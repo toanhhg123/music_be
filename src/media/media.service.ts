@@ -7,17 +7,37 @@ class MediaService {
   getAll(query: PageQuery) {
     const search = query.search || ''
 
-    const filter = {
-      name: {
-        [Op.like]: '%' + search + '%'
-      }
-    }
-
     return Media.findAll({
-      where: filter,
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.like]: '%' + search + '%'
+            }
+          },
+          {
+            '$author.firstName$': {
+              [Op.like]: '%' + search + '%'
+            }
+          },
+          {
+            '$author.email$': {
+              [Op.like]: '%' + search + '%'
+            }
+          },
+          {
+            '$author.lastName$': {
+              [Op.like]: '%' + search + '%'
+            }
+          }
+        ]
+      },
       include: [
         { model: Album, as: 'album' },
-        { model: User, as: 'author' }
+        {
+          model: User,
+          as: 'author'
+        }
       ]
     })
   }
