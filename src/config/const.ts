@@ -4,8 +4,8 @@ export const DB = {
   DB_NAME: 'MUSIC_DB',
   PORT: 3308,
   USER: 'root',
-  PASS: '',
-  HOST: 'localhost'
+  PASS: '4kDGQDYe4JxDjRd',
+  HOST: '14.225.206.52'
 }
 
 export const JWT = {
