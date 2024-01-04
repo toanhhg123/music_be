@@ -8,6 +8,7 @@ import PlayList from '~/playlist/playlist.model'
 import { PlayListAndMusic } from '~/playlistAndMusics/playlistAndMusics.model'
 import { Role } from '~/role/role.model'
 import { User } from '~/user/user.model'
+import { MediaType } from '~/mediaType/mediaType.model'
 
 // user and role
 User.belongsTo(Role, { foreignKey: 'roleCode', targetKey: 'code', as: 'role' })
@@ -54,8 +55,14 @@ Comment.belongsTo(User, { foreignKey: 'authorId', targetKey: 'id', as: 'author' 
 Comment.belongsTo(Media, { foreignKey: 'mediaId', targetKey: 'id' })
 Media.hasMany(Comment, { foreignKey: 'mediaId' })
 
+//media type and media
+MediaType.hasMany(Media, { foreignKey: 'mediaTypeId', as: 'medias' })
+Media.belongsTo(MediaType, { foreignKey: 'mediaTypeId', as: 'mediaType' })
+
 export const seedModel = async () => {
-  await sequelize.sync({})
+  await MediaType.sync({ alter: true })
+  await Media.sync({ alter: true })
+  await sequelize.sync({ alter: true })
 
   // await Promise.all([
   //   Role.create({ code: ERole.ADMIN }),
@@ -68,4 +75,4 @@ export const seedModel = async () => {
 
 seedModel().catch(console.log)
 
-export { Album, Comment, History, Media, PlayList, PlayListAndMusic, Role, User }
+export { Album, Comment, History, Media, PlayList, PlayListAndMusic, Role, User, MediaType }

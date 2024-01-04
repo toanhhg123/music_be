@@ -1,6 +1,7 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, NonAttribute } from 'sequelize'
 import { Album } from '~/album/album.model'
 import sequelize from '~/config/db'
+import { MediaType } from '~/mediaType/mediaType.model'
 import { User } from '~/model'
 
 export class Media extends Model<InferAttributes<Media, { omit: 'author' | 'album' }>, InferCreationAttributes<Media>> {
@@ -11,9 +12,14 @@ export class Media extends Model<InferAttributes<Media, { omit: 'author' | 'albu
   declare src: string
   declare authorId: string
   declare isPremium: boolean
+  declare duration: number
+  declare listenNumber: number
+  declare mediaTypeId?: string
+
   declare albumId: CreationOptional<string>
   declare author?: NonAttribute<User>
   declare album?: NonAttribute<Album>
+  declare mediaType?: NonAttribute<MediaType>
 }
 
 Media.init(
@@ -27,6 +33,10 @@ Media.init(
       type: DataTypes.UUID,
       allowNull: false
     },
+    mediaTypeId: {
+      type: DataTypes.UUID,
+      allowNull: true
+    },
     albumId: {
       type: DataTypes.UUID,
       allowNull: true
@@ -34,6 +44,14 @@ Media.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    listenNumber: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     },
     image: {
       type: DataTypes.STRING,
