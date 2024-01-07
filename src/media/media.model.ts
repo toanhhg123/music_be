@@ -16,7 +16,7 @@ export class Media extends Model<InferAttributes<Media, { omit: 'author' | 'albu
   declare listenNumber: number
   declare mediaTypeId?: string
 
-  declare albumId: CreationOptional<string>
+  declare albumId: CreationOptional<string> | null
   declare author?: NonAttribute<User>
   declare album?: NonAttribute<Album>
   declare mediaType?: NonAttribute<MediaType>

@@ -1,4 +1,4 @@
-import { removeAfterLastDot } from './../ultils/index'
+import { removeAfterLastDot } from '../utils/index'
 import { UploadApiResponse, v2 as cloudinary } from 'cloudinary'
 import { uniqueId } from 'lodash'
 import path from 'path'

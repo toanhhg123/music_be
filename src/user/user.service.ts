@@ -2,6 +2,8 @@ import * as bcrypt from 'bcrypt'
 import { HTTP409Error } from '~/http/error'
 import { ERole } from '~/role/role.model'
 import { User } from './user.model'
+import { Media } from '~/model'
+import sequelize from '~/config/db'
 
 class UserService {
   async create(user: User) {
@@ -16,11 +18,40 @@ class UserService {
   }
 
   getAllUser() {
-    return User.findAll({ limit: 15 })
+    return User.findAll()
   }
 
   getSingers() {
-    return User.findAll({ limit: 15, where: { roleCode: ERole.SINGER } })
+    return User.findAll({
+      where: { roleCode: ERole.SINGER },
+      include: { model: Media, as: 'medias', attributes: ['id', 'listenNumber'] },
+      raw: true,
+      group: [
+        'medias.id',
+        'id',
+        'medias.listenNumber',
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'password',
+        'isPremium',
+        'roleCode',
+        'avatar'
+      ],
+      attributes: [
+        'id',
+        [sequelize.fn('sum', sequelize.col('medias.listenNumber')), 'listenNumber'],
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'password',
+        'isPremium',
+        'roleCode',
+        'avatar'
+      ]
+    })
   }
 
   updateUser(id: string, user: Partial<User>) {

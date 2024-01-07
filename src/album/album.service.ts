@@ -2,7 +2,7 @@ import { HTTP403Error } from '~/http/error'
 import { Album } from './album.model'
 import { Media, User } from '~/model'
 import { ERole } from '~/role/role.model'
-import { Op } from 'sequelize'
+import { Op, Transaction } from 'sequelize'
 
 class AlbumService {
   async isAuthor(userId: string, albumId: string) {
@@ -44,6 +44,11 @@ class AlbumService {
 
   create(album: Album) {
     return Album.create(album)
+  }
+
+  async remove(transaction: Transaction, id: string) {
+    await Media.update({ albumId: null }, { where: { albumId: id }, transaction })
+    return await Album.destroy({ where: { id }, transaction })
   }
 }
 

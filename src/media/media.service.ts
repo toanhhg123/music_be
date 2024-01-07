@@ -1,5 +1,6 @@
-import { Op } from 'sequelize'
-import { Album, User } from '~/model'
+import { Op, Transaction } from 'sequelize'
+import { Favorite } from '~/favorite/favorite.model'
+import { Album, Comment, History, PlayListAndMusic, User } from '~/model'
 import { PageQuery } from '~/utils/page-queries'
 import { Media } from './media.model'
 
@@ -70,6 +71,15 @@ class MediaService {
 
   update(id: string, media: Partial<Media>) {
     return Media.update(media, { where: { id } })
+  }
+
+  async remove(transaction: Transaction, id: string) {
+    await PlayListAndMusic.destroy({ where: { mediaId: id }, transaction })
+    await Comment.destroy({ where: { mediaId: id }, transaction })
+    await Favorite.destroy({ where: { mediaId: id }, transaction })
+    await History.destroy({ where: { mediaId: id }, transaction })
+    const number = await Media.destroy({ where: { id }, transaction })
+    return number
   }
 }
 

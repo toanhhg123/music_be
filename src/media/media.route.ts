@@ -1,6 +1,15 @@
 import { Router } from 'express'
 import expressAsyncHandler from 'express-async-handler'
-import { getAll, AddMusic, updateMusic, getOne, getByAlbumId, getMyMusic, getMusicByUserId } from './media.controller'
+import {
+  getAll,
+  AddMusic,
+  updateMusic,
+  getOne,
+  getByAlbumId,
+  getMyMusic,
+  getMusicByUserId,
+  remove
+} from './media.controller'
 import { authorize } from '~/middlewares/auth.middleware'
 
 const router = Router()
@@ -14,5 +23,6 @@ router.use(authorize())
 router.get('/my-music/me', expressAsyncHandler(getMyMusic))
 router.post('/', expressAsyncHandler(AddMusic))
 router.patch('/:id', expressAsyncHandler(updateMusic))
+router.delete('/:id', expressAsyncHandler(remove))
 
 export default router

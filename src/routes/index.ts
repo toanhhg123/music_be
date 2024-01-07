@@ -10,12 +10,14 @@ import uploadRouter from '~/upload/upload.route'
 import userRouter from '~/user/user.route'
 import paymentRoute from '~/payment/payment.route'
 import reportRouter from '~/report/report.route'
+import mediaTypeRouter from '~/mediaType/mediaType.route'
 
 const router = Router()
 
 router.use('/auth', authRouter)
 router.use('/user', userRouter)
 router.use('/media', mediaRouter)
+router.use('/mediaType', mediaTypeRouter)
 router.use('/album', albumRouter)
 router.use('/playlist', playlistRouter)
 router.use('/favorite', favoriteRoute.router)

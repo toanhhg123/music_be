@@ -1,9 +1,10 @@
 import * as bcrypt from 'bcrypt'
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, NonAttribute } from 'sequelize'
 import sequelize from '~/config/db'
+import { Media } from '~/model'
 import { ERole, Role } from '~/role/role.model'
 
-export class User extends Model<InferAttributes<User, { omit: 'role' }>, InferCreationAttributes<User>> {
+export class User extends Model<InferAttributes<User, { omit: 'role' | 'medias' }>, InferCreationAttributes<User>> {
   declare id: CreationOptional<string>
   declare firstName: CreationOptional<string>
   declare lastName: CreationOptional<string>
@@ -14,6 +15,8 @@ export class User extends Model<InferAttributes<User, { omit: 'role' }>, InferCr
   declare roleCode: ERole
   declare avatar?: string
   declare role?: NonAttribute<Role>
+
+  declare medias?: NonAttribute<Media[]>
 
   public static async validPassword(user: User, password: string): Promise<boolean> {
     return await bcrypt.compare(password, user.password)

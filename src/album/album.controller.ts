@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
+import { transactions } from '~/config/db'
 import { Album, User } from '~/model'
 import { PageQuery } from '~/utils/page-queries'
 import albumService from './album.service'
@@ -45,6 +46,20 @@ export const update = async (req: Request<{ id: string }, unknown, Partial<Album
   await albumService.isAuthor(id, req.params.id)
 
   const data = await albumService.update(req.params.id, req.body)
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get album success',
+    element: data
+  })
+}
+
+export const remove = async (req: Request<{ id: string }, unknown, Partial<Album>, PageQuery>, res: Response) => {
+  const { id } = req.user
+
+  await albumService.isAuthor(id, req.params.id)
+
+  const data = await transactions((t) => albumService.remove(t, req.params.id))
 
   res.json({
     status: StatusCodes.OK,

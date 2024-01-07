@@ -5,6 +5,7 @@ import { PageQuery } from '~/utils/page-queries'
 import mediaService from './media.service'
 import { Media } from './media.model'
 import { HTTP400Error } from '~/http/error'
+import { transactions } from '~/config/db'
 
 export const getAll = async (req: Request<unknown, unknown, User, PageQuery>, res: Response) => {
   const data = await mediaService.getAll(req.query)
@@ -66,6 +67,16 @@ export const getOne = async (req: Request<{ id: string }, unknown, Media, PageQu
   const data = await mediaService.getById(req.params.id)
 
   if (!data) throw new HTTP400Error('data not found')
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get media success',
+    element: data
+  })
+}
+
+export const remove = async (req: Request<{ id: string }, unknown, Media, PageQuery>, res: Response) => {
+  const data = await transactions((t) => mediaService.remove(t, req.params.id))
 
   res.json({
     status: StatusCodes.OK,
