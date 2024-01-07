@@ -22,8 +22,8 @@ export class FavoriteService extends BaseService<Favorite> {
 
   async getMediaTrending() {
     const favoritesGrouped = await this.model.findAll({
-      attributes: ['mediaId', [sequelize.fn('COUNT', sequelize.col('mediaId')), 'favorites'], 'userId', 'id'],
-      group: ['mediaId', 'userId', 'id'],
+      attributes: ['mediaId', [sequelize.fn('COUNT', sequelize.col('mediaId')), 'favorites']],
+      group: ['mediaId'],
       include: [
         { model: Media, as: 'media' },
         { model: User, as: 'user' }
