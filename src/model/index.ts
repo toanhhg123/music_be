@@ -31,7 +31,7 @@ Media.belongsTo(Album, { foreignKey: 'albumId', targetKey: 'id', as: 'album' })
 Album.hasMany(Media, { foreignKey: 'albumId', as: 'medias' })
 
 // favorite and user
-Favorite.belongsTo(User, { foreignKey: 'userId', targetKey: 'id' })
+Favorite.belongsTo(User, { foreignKey: 'userId', as: 'user' })
 User.hasMany(Favorite, { foreignKey: 'userId' })
 
 //favorite and media

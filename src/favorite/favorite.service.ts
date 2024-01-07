@@ -1,7 +1,7 @@
 import { BaseService } from '~/base/base.service'
 import { Favorite } from './favorite.model'
 import { FindOptions, InferCreationAttributes, Op, Optional } from 'sequelize'
-import { Media } from '~/model'
+import { Media, User } from '~/model'
 import { HTTP403Error } from '~/http/error'
 import sequelize from '~/config/db'
 
@@ -22,9 +22,12 @@ export class FavoriteService extends BaseService<Favorite> {
 
   async getMediaTrending() {
     const favoritesGrouped = await this.model.findAll({
-      attributes: ['mediaId', [sequelize.fn('COUNT', sequelize.col('mediaId')), 'favorites']],
-      group: ['mediaId'],
-      include: [{ model: Media, as: 'media' }],
+      attributes: ['mediaId', [sequelize.fn('COUNT', sequelize.col('mediaId')), 'favorites'], 'userId', 'id'],
+      group: ['mediaId', 'userId', 'id'],
+      include: [
+        { model: Media, as: 'media' },
+        { model: User, as: 'user' }
+      ],
       order: [['favorites', 'DESC']]
     })
 

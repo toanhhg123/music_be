@@ -21,24 +21,11 @@ class UserService {
     return User.findAll()
   }
 
-  getSingers() {
-    return User.findAll({
+  async getSingers() {
+    return await User.findAll({
       where: { roleCode: ERole.SINGER },
-      include: { model: Media, as: 'medias', attributes: ['id', 'listenNumber'] },
-      raw: true,
-      group: [
-        'medias.id',
-        'id',
-        'medias.listenNumber',
-        'firstName',
-        'lastName',
-        'email',
-        'phone',
-        'password',
-        'isPremium',
-        'roleCode',
-        'avatar'
-      ],
+      include: { model: Media, as: 'medias' },
+      group: ['id', 'medias.id', 'medias.listenNumber'],
       attributes: [
         'id',
         [sequelize.fn('sum', sequelize.col('medias.listenNumber')), 'listenNumber'],
