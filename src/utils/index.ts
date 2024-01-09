@@ -6,3 +6,13 @@ export const removeAfterLastDot = (inputString: string) => {
     return inputString
   }
 }
+
+export function autoBind(instance: any): void {
+  const prototype = Object.getPrototypeOf(instance)
+  console.log(instance)
+  Object.getOwnPropertyNames(prototype)
+    .filter((name) => typeof instance[name] === 'function')
+    .forEach((name) => {
+      instance[name] = instance[name].bind(instance)
+    })
+}

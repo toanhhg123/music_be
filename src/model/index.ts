@@ -1,5 +1,6 @@
 import { Album } from '~/album/album.model'
 import { Comment } from '~/comment/comments.model'
+import Download from '~/download/download.model'
 import { Favorite } from '~/favorite/favorite.model'
 import { History } from '~/history/history.model'
 import { Media } from '~/media/media.model'
@@ -59,6 +60,9 @@ Media.hasMany(Comment, { foreignKey: 'mediaId' })
 MediaType.hasMany(Media, { foreignKey: 'mediaTypeId', as: 'medias' })
 Media.belongsTo(MediaType, { foreignKey: 'mediaTypeId', as: 'mediaType' })
 
+Download.belongsTo(User, { foreignKey: 'userId', as: 'user' })
+Download.belongsTo(Media, { foreignKey: 'mediaId', as: 'media' })
+
 export const seedModel = async () => {
   // await Promise.all([
   //   Role.create({ code: ERole.ADMIN }),
@@ -70,4 +74,4 @@ export const seedModel = async () => {
 
 seedModel().catch(console.log)
 
-export { Album, Comment, History, Media, MediaType, PlayList, PlayListAndMusic, Role, User }
+export { Album, Comment, History, Media, MediaType, PlayList, PlayListAndMusic, Role, User, Download }

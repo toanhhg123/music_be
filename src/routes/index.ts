@@ -11,9 +11,11 @@ import userRouter from '~/user/user.route'
 import paymentRoute from '~/payment/payment.route'
 import reportRouter from '~/report/report.route'
 import mediaTypeRouter from '~/mediaType/mediaType.route'
+import downloadRouter from '~/download/download.route'
 
 const router = Router()
 
+router.get('/', (req, res) => res.send('hello word 2'))
 router.use('/auth', authRouter)
 router.use('/user', userRouter)
 router.use('/media', mediaRouter)
@@ -26,5 +28,6 @@ router.use('/history', historyRouter)
 router.use('/comment', commentRouter)
 router.use('/payment', paymentRoute)
 router.use('/report', reportRouter)
+router.use('/download', downloadRouter)
 
 export default router

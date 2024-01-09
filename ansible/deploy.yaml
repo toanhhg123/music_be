@@ -1,0 +1,18 @@
+---
+- name: SSH to server and run ls
+  hosts: 14.225.206.52
+  tasks:
+    - name: Run ls command
+      command: ls
+      register: ls_output
+
+    - name: Display ls output
+      debug:
+        var: ls_output.stdout_lines
+
+- name: Deploy nodejs app
+  hosts: 14.225.206.52
+  become: True
+  tasks:
+    - name: Start the application
+      command: /bin/bash /root/.nvm/versions/node/v21.4.0/bin/npm  -v
