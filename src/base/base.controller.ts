@@ -6,8 +6,12 @@ import { autoBind } from '~/utils'
 export class BaseController<S extends BaseService> {
   constructor(service: S) {
     this.service = service
-    console.log(`${this.service.tableName} will be inject to controller`)
+    this.getAll = this.getAll.bind(this)
+    this.create = this.create.bind(this)
+    this.update = this.update.bind(this)
+    this.remove = this.remove.bind(this)
     autoBind(this)
+    console.log(`${this.service.tableName} will be inject to controller`)
   }
 
   service: S
