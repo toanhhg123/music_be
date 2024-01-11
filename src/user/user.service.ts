@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt'
 import { HTTP409Error } from '~/http/error'
 import { ERole } from '~/role/role.model'
 import { User } from './user.model'
-import { Media } from '~/model'
+import { Album, Media } from '~/model'
 import sequelize from '~/config/db'
 
 class UserService {
@@ -24,7 +24,7 @@ class UserService {
   async getSingers() {
     return await User.findAll({
       where: { roleCode: ERole.SINGER },
-      include: { model: Media, as: 'medias' },
+      include: [{ model: Media, as: 'medias', include: [{ model: Album, as: 'album' }] }],
       group: ['id', 'medias.id', 'medias.listenNumber'],
       attributes: [
         'id',

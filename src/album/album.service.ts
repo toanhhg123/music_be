@@ -33,7 +33,7 @@ class AlbumService {
             [Op.or]: [{ roleCode: ERole.SINGER }, { roleCode: ERole.ADMIN }]
           }
         },
-        { model: Media, as: 'medias' }
+        { model: Media, as: 'medias', include: [{ model: Album, as: 'album' }] }
       ]
     })
   }
