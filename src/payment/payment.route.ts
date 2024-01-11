@@ -33,8 +33,8 @@ router.post(
       },
       mode: 'payment',
       currency: 'usd',
-      success_url: 'http://localhost:8080/payment/success',
-      cancel_url: 'http://localhost:8080/payment/cancel'
+      success_url: 'http://14.225.206.52:8080/payment/success',
+      cancel_url: 'http://14.225.206.52:8080/payment/cancel'
     })
 
     res.json({
