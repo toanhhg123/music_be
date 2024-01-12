@@ -3,7 +3,7 @@ import { ParamsDictionary } from 'express-serve-static-core'
 import { ParsedQs } from 'qs'
 import { BaseController } from '~/base/base.controller'
 import { transactions } from '~/config/db'
-import { Media } from '~/model'
+import { Album, Media, User } from '~/model'
 import mediaTypeService from './mediaType.service'
 
 export class MediaTypeController extends BaseController<typeof mediaTypeService> {
@@ -22,7 +22,16 @@ export class MediaTypeController extends BaseController<typeof mediaTypeService>
   async getOne(req: Request, res: Response) {
     const data = await this.service.model.findOne({
       where: { id: req.params.id },
-      include: [{ model: Media, as: 'medias' }]
+      include: [
+        {
+          model: Media,
+          as: 'medias',
+          include: [
+            { model: User, as: 'author' },
+            { model: Album, as: 'album' }
+          ]
+        }
+      ]
     })
 
     this.onSuccess(res, data)

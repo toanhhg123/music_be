@@ -1,6 +1,6 @@
 import { FindOptions } from 'sequelize'
 import { BaseService } from '~/base/base.service'
-import { Media, PlayList, PlayListAndMusic } from '~/model'
+import { Album, Media, PlayList, PlayListAndMusic, User } from '~/model'
 
 export class PlaylistService extends BaseService<PlayList> {
   constructor() {
@@ -12,7 +12,22 @@ export class PlaylistService extends BaseService<PlayList> {
   ): Promise<{ rows: PlayList[]; total: number; skip: number; limit: number; page: number }> {
     return super.findWithPagination({
       ...findOptions,
-      include: [{ model: PlayListAndMusic, as: 'playlistAndMusics', include: [{ model: Media, as: 'media' }] }]
+      include: [
+        {
+          model: PlayListAndMusic,
+          as: 'playlistAndMusics',
+          include: [
+            {
+              model: Media,
+              as: 'media',
+              include: [
+                { model: Album, as: 'album' },
+                { model: User, as: 'author' }
+              ]
+            }
+          ]
+        }
+      ]
     })
   }
 
