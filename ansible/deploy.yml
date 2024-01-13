@@ -1,0 +1,13 @@
+- name: deploy to server
+  hosts: server
+  become: yes
+  tasks:
+    - name: Change to /home/ubuntu/deploy and show all files
+      shell: |
+        cd /root/music_be &&
+        ./deploy.sh
+      register: ls_output
+
+    - name: Display ls output
+      debug:
+        var: ls_output.stdout_lines

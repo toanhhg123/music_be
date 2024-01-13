@@ -27,6 +27,11 @@ app.use(
 
 connect().catch(console.log)
 
+app.get('/health', (req, res) => {
+  console.log('Health check passed! v4')
+  res.status(200).send('Health check passed v3')
+})
+
 app.use(router)
 
 app.use(HandleNotFound)

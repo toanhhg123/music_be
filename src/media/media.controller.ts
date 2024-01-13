@@ -94,3 +94,16 @@ export const updateMusic = async (req: Request<{ id: string }, unknown, Partial<
     element: data
   })
 }
+
+export const increaseListenNumber = async (
+  req: Request<{ id: string }, unknown, Partial<Media>, PageQuery>,
+  res: Response
+) => {
+  const data = await mediaService.increaseListenNumber(req.params.id)
+
+  res.json({
+    status: StatusCodes.OK,
+    message: 'get media success',
+    element: data
+  })
+}

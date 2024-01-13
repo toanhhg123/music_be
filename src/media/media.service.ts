@@ -3,6 +3,7 @@ import { Favorite } from '~/favorite/favorite.model'
 import { Album, Comment, History, PlayListAndMusic, User } from '~/model'
 import { PageQuery } from '~/utils/page-queries'
 import { Media } from './media.model'
+import { HTTP400Error } from '~/http/error'
 
 class MediaService {
   getAll(query: PageQuery) {
@@ -71,6 +72,13 @@ class MediaService {
 
   update(id: string, media: Partial<Media>) {
     return Media.update(media, { where: { id } })
+  }
+
+  async increaseListenNumber(id: string) {
+    const media = await Media.findByPk(id)
+    if (!media) throw new HTTP400Error('not found media')
+    media.listenNumber = media.listenNumber + 1
+    return media.save()
   }
 
   async remove(transaction: Transaction, id: string) {
